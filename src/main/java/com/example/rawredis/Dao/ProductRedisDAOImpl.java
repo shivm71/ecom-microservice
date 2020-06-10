@@ -1,38 +1,77 @@
 package com.example.rawredis.Dao;
 
-import com.example.rawredis.Dto.ProductDTO;
 import com.example.rawredis.Model.Product;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Repository
+@Slf4j
 public class ProductRedisDAOImpl {
     @Autowired
-    RedisTemplate<String, Product> redisTemplate;
+    RedisTemplate redisTemplate;
+    String KEY = "Product";
 
-    public boolean isExist(String id){
-        return(redisTemplate.hasKey(id));
+//    @Value("${cachesize}")
+    static int cachesize = 10;
+
+    @Autowired
+    RedisConnectionFactory factory;
+
+    public boolean isExist(String id) {
+        return(redisTemplate.opsForHash().hasKey(KEY,id));
     }
+
     public void insert(Product product){
-       redisTemplate.opsForValue().set(product.getId(),product);
+        if(getSize() >= cachesize){
+            deleteOne();
+        }
+        Map productHash = new ObjectMapper().convertValue(product, Map.class);
+        redisTemplate.opsForHash().put(KEY, product.getId(), productHash);
     }
+
+    public long getSize(){
+        return redisTemplate.opsForHash().size(KEY);
+    }
+
+    public void deleteOne(){
+        Object key = redisTemplate.opsForHash().keys(KEY).iterator().next();
+        redisTemplate.opsForHash().delete(KEY,key);
+
+    }
+
+    public void insert(ArrayList<Product> product){
+        for (Product entry : product){
+            insert(entry);
+        }
+    }
+
+
     public Product findbyid(String id){
-        return redisTemplate.opsForValue().get(id);
+        return (Product) redisTemplate.opsForHash().get(KEY,id);
 
     }
     public List<Product> getAll(){
-       Set<String> keys= redisTemplate.keys("*");
-       ArrayList<Product> listproducts= new ArrayList<>();
-       for(String key:keys){
-           listproducts.add(redisTemplate.opsForValue().get(key));
-       }
-       return listproducts;
+        Map entries= redisTemplate.opsForHash().entries(KEY);
+        ArrayList<Product> listproducts= new ArrayList<>();
+        Set< Map.Entry< String,Integer> > st = entries.entrySet();
+
+        for (Map.Entry<?,?> me:st) {
+            listproducts.add((Product) new ObjectMapper().convertValue(me.getValue(),Product.class));
+        }
+
+        return listproducts;
+    }
+
+    public void deleteAll(){
+        factory.getConnection().flushDb();
     }
 
 }

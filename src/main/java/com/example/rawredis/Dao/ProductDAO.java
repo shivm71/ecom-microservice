@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductDAO extends MongoRepository<Product,String> {
+//    public Object insert(Product product);
 
 
 }
