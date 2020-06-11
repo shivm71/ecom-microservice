@@ -2,6 +2,7 @@ package com.example.rawredis.Dao;
 
 import com.example.rawredis.Dto.ProductDTO;
 import com.example.rawredis.Model.Product;
+import com.example.rawredis.Model.QueueRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class ProductDAOimpl{
     @Autowired
     ProductDAO productDAO;
+
 
     @Value("${cache.size}")
     private static int cachesize;
@@ -36,6 +38,25 @@ public class ProductDAOimpl{
                 product.add(entries.get(i));
         }
         return product;
+    }
+    //0-> out of stock
+    //1-> product entry 1
+    //2-> more then 1 products
+    public int order(QueueRequest queueRequest){
+        Product product = findbyid(queueRequest.getProductid());
+        if(product.getQuantity() == 0){
+            return 0;
+        } else if(product.getQuantity() == 1){
+           update(product);
+           return 1;
+        }else{
+            update(product);
+            return 2;
+        }
+    }
+    public void update(Product product){
+        product.setQuantity(product.getQuantity()-1);
+        productDAO.save(product);
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.rawredis.Controller;
 
 import com.example.rawredis.Dto.ProductDTO;
 import com.example.rawredis.Model.Product;
+import com.example.rawredis.Model.QueueRequest;
 import com.example.rawredis.Service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 @RequestMapping(value = "/user")
 
-public class Sellercontroller {
+public class Usercontroller {
     @Autowired
     ProductService productservice;
 
@@ -53,9 +54,16 @@ public class Sellercontroller {
 
     @PostMapping(value = "/view/{id}")
     public ResponseEntity<?> view(@PathVariable("id") String id){
-        log.info("???????????????view by id"+id);
         return ResponseEntity.ok(productservice.getbyid(id)
         );
+
+    }
+
+    @PostMapping(value = "/addtocart")
+    public ResponseEntity<?> addtocart(@RequestParam("productid") String productId,@RequestParam("userid") String userId){
+        log.info("????????????add to CART by id");
+        QueueRequest queuerequest =new QueueRequest(productId,userId);
+        return ResponseEntity.ok(productservice.addtocart(queuerequest));
 
     }
 

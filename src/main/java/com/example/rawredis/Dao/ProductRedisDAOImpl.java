@@ -17,6 +17,7 @@ import java.util.*;
 public class ProductRedisDAOImpl {
     @Autowired
     RedisTemplate redisTemplate;
+
     String KEY = "Product";
 
     @Value("${cache.size}")
@@ -29,12 +30,20 @@ public class ProductRedisDAOImpl {
         return(redisTemplate.opsForHash().hasKey(KEY,id));
     }
 
+    public boolean isExist(String Key ,String id) {
+        return(redisTemplate.opsForHash().hasKey(KEY,id));
+    }
+
     public void insert(Product product){
         if(getSize() >= cachesize){
             deleteOne();
         }
         Map productHash = new ObjectMapper().convertValue(product, Map.class);
         redisTemplate.opsForHash().put(KEY, product.getId(), productHash);
+    }
+    public void set(String KEY,String id){
+        //true -> shows out of stock for particular id in queue as a key
+        redisTemplate.opsForHash().put(KEY,id,true);
     }
 
     public long getSize(){

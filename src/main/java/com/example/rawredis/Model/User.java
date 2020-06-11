@@ -22,6 +22,7 @@ public class User {
     private ArrayList<String> roles;
     private String email;
     private String password;
+    private ArrayList<String> ordered_product = new ArrayList<>();
     public User(){}
 
 

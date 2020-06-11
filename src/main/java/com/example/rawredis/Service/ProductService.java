@@ -3,8 +3,10 @@ package com.example.rawredis.Service;
 import com.example.rawredis.Dao.ProductDAO;
 import com.example.rawredis.Dao.ProductDAOimpl;
 import com.example.rawredis.Dao.ProductRedisDAOImpl;
+import com.example.rawredis.Dao.RabbitMQDAO;
 import com.example.rawredis.Dto.ProductDTO;
 import com.example.rawredis.Model.Product;
+import com.example.rawredis.Model.QueueRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +20,15 @@ import java.util.List;
 public class ProductService {
     @Autowired
     ProductRedisDAOImpl productRedisDAOImpl;
+
+
     @Autowired
     ProductDAOimpl productDAOimpl;
+
+    @Autowired
+    RabbitMQDAO rabbitMQDAO;
+
+
     public ProductDTO getbyid(String id){
         if(productRedisDAOImpl.isExist(id)){
             return new ProductDTO(productRedisDAOImpl.findbyid(id));
@@ -68,6 +77,32 @@ public class ProductService {
         }
         return "Flushing Done";
     }
+
+    public String addtocart(QueueRequest queueRequest){
+        if(productRedisDAOImpl.isExist("QUEUE",queueRequest.getProductid())){
+            rabbitMQDAO.sendtoqueue(queueRequest);
+            // Send to rabbit queuw
+
+            return("Product out of stock You'll be notify when ity will be back in stock");
+        } else{
+
+            int result=productDAOimpl.order(queueRequest);
+
+            if(result==0){
+                productRedisDAOImpl.set("QUEUE",queueRequest.getProductid());
+                return "Product out of stock You'll be notify when ity will be back in stock";
+
+            }else if(result==1){
+
+                rabbitMQDAO.sendtoqueue(queueRequest);
+                productRedisDAOImpl.set("QUEUE",queueRequest.getProductid());
+
+            }
+           return "Order Placed";
+
+        }
+    }
+//    3 3users 2 1 0->redis->entry
 
 
 }

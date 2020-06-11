@@ -5,6 +5,7 @@ import com.example.rawredis.Dao.UserDao;
 import com.example.rawredis.Dto.UserDto;
 import com.example.rawredis.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,6 +35,7 @@ JwtUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
+
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),grantauthority(user.getRoles()));
     }
 
