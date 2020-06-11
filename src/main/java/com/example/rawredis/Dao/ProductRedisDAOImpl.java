@@ -19,8 +19,8 @@ public class ProductRedisDAOImpl {
     RedisTemplate redisTemplate;
     String KEY = "Product";
 
-//    @Value("${cachesize}")
-    static int cachesize = 10;
+    @Value("${cache.size}")
+    static int cachesize;
 
     @Autowired
     RedisConnectionFactory factory;

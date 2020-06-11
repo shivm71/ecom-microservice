@@ -4,6 +4,7 @@ package com.example.rawredis.Config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,16 +30,16 @@ import javax.annotation.PreDestroy;
 public class Rconfig {
 
 
+    @Value("${spring.redis.host}")
+    String hostName;
 
-    String hostName = "localhost";
-
-    Integer port = 6379;
-
+    @Value("${spring.redis.port}")
+    Integer port;
 
     @Bean
     public LettuceConnectionFactory redisConnectionFac() {
 
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(hostName,port);
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
 
     }

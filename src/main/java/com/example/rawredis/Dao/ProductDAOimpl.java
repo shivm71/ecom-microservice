@@ -16,8 +16,8 @@ public class ProductDAOimpl{
     @Autowired
     ProductDAO productDAO;
 
-//    @Value("${cachesize}")
-    private static int cachesize = 10;
+    @Value("${cache.size}")
+    private static int cachesize;
 
     public Product insert(Product product)
     {
