@@ -3,18 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b166a895-452c-4b88-ba4c-f771515a6a94" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/consumer/Dao/NotificationDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/consumer/Dao/NotificationDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/consumer/Model/UpdateQueueRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/consumer/Model/UpdateQueueRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/consumer/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/consumer/service/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/consumer/service/NotifyRabbitMQListner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/consumer/service/NotifyRabbitMQListner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/consumer/service/UpdateRabbitMQListner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/consumer/service/UpdateRabbitMQListner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/consumer/Dao/NotificationDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/consumer/Dao/NotificationDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/consumer/Model/UpdateQueueRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/consumer/Model/UpdateQueueRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/consumer/service/NotificationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/consumer/service/NotificationService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/consumer/service/NotifyRabbitMQListner.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/consumer/service/NotifyRabbitMQListner.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/consumer/service/UpdateRabbitMQListner.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/consumer/service/UpdateRabbitMQListner.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +87,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1591964839158</updated>
-      <workItem from="1591964847013" duration="11298000" />
+      <workItem from="1591964847013" duration="12766000" />
     </task>
     <servers />
   </component>
@@ -108,37 +99,57 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="804" y="261" width="374" height="592" key="#com.intellij.ide.util.MemberChooser/72.27.1848.1053@72.27.1848.1053" timestamp="1591971312107" />
-    <state width="1802" height="275" key="GridCell.Tab.0.bottom" timestamp="1591982935237">
+    <state width="1802" height="275" key="GridCell.Tab.0.bottom" timestamp="1591984489227">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1802" height="275" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1591982935237" />
-    <state width="1802" height="275" key="GridCell.Tab.0.center" timestamp="1591982935235">
+    <state width="1802" height="275" key="GridCell.Tab.0.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1591984489227" />
+    <state width="1802" height="275" key="GridCell.Tab.0.center" timestamp="1591984489225">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1802" height="275" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1591982935235" />
-    <state width="1802" height="275" key="GridCell.Tab.0.left" timestamp="1591982935233">
+    <state width="1802" height="275" key="GridCell.Tab.0.center/72.27.1848.1053@72.27.1848.1053" timestamp="1591984489225" />
+    <state width="1802" height="275" key="GridCell.Tab.0.left" timestamp="1591984489224">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1802" height="275" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1591982935233" />
-    <state width="1802" height="275" key="GridCell.Tab.0.right" timestamp="1591982935236">
+    <state width="1802" height="275" key="GridCell.Tab.0.left/72.27.1848.1053@72.27.1848.1053" timestamp="1591984489224" />
+    <state width="1802" height="275" key="GridCell.Tab.0.right" timestamp="1591984489226">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1802" height="275" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1591982935236" />
-    <state width="1802" height="275" key="GridCell.Tab.1.bottom" timestamp="1591982935242">
+    <state width="1802" height="275" key="GridCell.Tab.0.right/72.27.1848.1053@72.27.1848.1053" timestamp="1591984489226" />
+    <state width="1802" height="275" key="GridCell.Tab.1.bottom" timestamp="1591984489233">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1802" height="275" key="GridCell.Tab.1.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1591982935242" />
-    <state width="1802" height="275" key="GridCell.Tab.1.center" timestamp="1591982935239">
+    <state width="1802" height="275" key="GridCell.Tab.1.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1591984489233" />
+    <state width="1802" height="275" key="GridCell.Tab.1.center" timestamp="1591984489230">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1802" height="275" key="GridCell.Tab.1.center/72.27.1848.1053@72.27.1848.1053" timestamp="1591982935239" />
-    <state width="1802" height="275" key="GridCell.Tab.1.left" timestamp="1591982935238">
+    <state width="1802" height="275" key="GridCell.Tab.1.center/72.27.1848.1053@72.27.1848.1053" timestamp="1591984489230" />
+    <state width="1802" height="275" key="GridCell.Tab.1.left" timestamp="1591984489227">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1802" height="275" key="GridCell.Tab.1.left/72.27.1848.1053@72.27.1848.1053" timestamp="1591982935238" />
-    <state width="1802" height="275" key="GridCell.Tab.1.right" timestamp="1591982935241">
+    <state width="1802" height="275" key="GridCell.Tab.1.left/72.27.1848.1053@72.27.1848.1053" timestamp="1591984489227" />
+    <state width="1802" height="275" key="GridCell.Tab.1.right" timestamp="1591984489232">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
-    <state width="1802" height="275" key="GridCell.Tab.1.right/72.27.1848.1053@72.27.1848.1053" timestamp="1591982935241" />
+    <state width="1802" height="275" key="GridCell.Tab.1.right/72.27.1848.1053@72.27.1848.1053" timestamp="1591984489232" />
+    <state width="1802" height="340" key="GridCell.Tab.2.bottom" timestamp="1591984188755">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1802" height="340" key="GridCell.Tab.2.bottom/72.27.1848.1053@72.27.1848.1053" timestamp="1591984188755" />
+    <state width="1802" height="340" key="GridCell.Tab.2.center" timestamp="1591984188752">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1802" height="340" key="GridCell.Tab.2.center/72.27.1848.1053@72.27.1848.1053" timestamp="1591984188752" />
+    <state width="1802" height="340" key="GridCell.Tab.2.left" timestamp="1591984188751">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1802" height="340" key="GridCell.Tab.2.left/72.27.1848.1053@72.27.1848.1053" timestamp="1591984188751" />
+    <state width="1802" height="340" key="GridCell.Tab.2.right" timestamp="1591984188754">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1802" height="340" key="GridCell.Tab.2.right/72.27.1848.1053@72.27.1848.1053" timestamp="1591984188754" />
+    <state x="529" y="211" width="924" height="691" key="Maven.ArtifactSearchDialog" timestamp="1591984107662">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="529" y="211" width="924" height="691" key="Maven.ArtifactSearchDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1591984107662" />
   </component>
 </project>
