@@ -11,5 +11,5 @@ import lombok.Setter;
 
 public class UpdateQueueRequest {
 
-    private long productid;
+    private String productid;
 }

@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UpdateRabbitMQListner implements MessageListener {
-	@Autowired
-	NotificationService notificationService;
+//	@Autowired
+//	NotificationService notificationService;
 
 	public void onMessage(Message message) {
 
 		System.out.println("UPdate Message From RabbitMQ: " + message);
-
-//		notificationService.notifyusers();
+//		UpdateQueueRequest updateQueueRequest = new UpdateQueueRequest();
+//		notificationService.notifyUsers(updateQueueRequest);
 	}
 }
