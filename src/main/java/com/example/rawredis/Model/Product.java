@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
 @Getter
 @Setter
 @ToString
@@ -18,4 +20,5 @@ public class Product implements Serializable {
     private String description;
     private double price;
     private int quantity;
+    private ArrayList<String> user_ordered = new ArrayList<>();
 }

@@ -16,7 +16,6 @@ public class ProductDTO {
     private String product_name;
     private String description;
     private double price;
-    private ArrayList<String> user_ordered = new ArrayList<>();
     private int quantity;
 
 
