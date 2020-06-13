@@ -3,40 +3,53 @@ package com.consumer.service;
 import com.consumer.Dao.NotificationDaoImpl;
 import com.consumer.Model.Notify;
 import com.consumer.Model.NotifyQueueRequest;
+
+import com.consumer.Model.UpdateQueueRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.fasterxml.jackson.databind.util.JSONPObject;
-//import jdk.nashorn.internal.parser.JSONParser;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageListener;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 
 
 @Service
-public class NotifyRabbitMQListner implements MessageListener {
-//    @Autowired
-//    NotificationDaoImpl notificationDaoImpl;
+public class NotifyRabbitMQListner {
+    @Autowired
+    NotificationDaoImpl notificationDaoImpl;
 
-    public void onMessage(Message message) {
-        String body=message.toString();
-        String arr[]=body.trim().split("\\s+");
-         String bodyattr=arr[0];
-        bodyattr=bodyattr.substring(7,bodyattr.length()-1);
+    @Autowired
+    NotificationService notificationService;
 
-//        NotifyQueueRequest notifyQueueRequest= null;
-//        try {
-//            notifyQueueRequest = new ObjectMapper().readValue(bodyattr, NotifyQueueRequest.class);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+    @RabbitListener(queues = "notify.queue")
+    public void notify(Message message) {
+        String msg = new String(message.getBody());
+        System.out.println(msg);
+        try {
+            NotifyQueueRequest notifyQueueRequest =  new ObjectMapper().readValue(msg, NotifyQueueRequest.class);
+            Notify notify=notificationDaoImpl.insert(notifyQueueRequest);
+            System.out.println("notify Message From RabbitMQ: " + notify);
 
-        System.out.println(bodyattr);
-//        System.out.println(message.getBody());
-//        NotifyQueueRequest notifyQueueRequest=new NotifyQueueRequest();
-//        Notify notify=notificationDaoImpl.insert(notifyQueueRequest);
-//        System.out.println("notify Message From RabbitMQ: " + notify);
+        } catch (JsonProcessingException e) {
+            System.out.println(e);
+        }
+
+    }
+    @RabbitListener(queues = "update.queue")
+    public void onUpdate(Message message) {
+        String msg = new String(message.getBody());
+        System.out.println(msg);
+        try {
+
+            UpdateQueueRequest updateQueueRequest = new ObjectMapper().readValue(msg, UpdateQueueRequest.class);
+            notificationService.notifyUsers(updateQueueRequest);
+
+
+        } catch (JsonProcessingException e) {
+            System.out.println(e);
+        }
+
     }
 
 }
