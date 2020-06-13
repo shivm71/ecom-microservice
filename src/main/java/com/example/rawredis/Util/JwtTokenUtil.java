@@ -1,4 +1,4 @@
-package com.example.rawredis.Config;
+package com.example.rawredis.Util;
 
 //import io.jsonwebtoken.Claims;
 //import io.jsonwebtoken.Jwts;
@@ -14,22 +14,20 @@ package com.example.rawredis.Config;
 //import java.util.Map;
 //import java.util.function.Function;
 import java.io.Serializable;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 import io.jsonwebtoken.JwtBuilder;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-@Slf4j
+
 @Component
 public class JwtTokenUtil implements Serializable {
 
@@ -67,16 +65,14 @@ public class JwtTokenUtil implements Serializable {
 
     //generate token for user
     public String generateToken(UserDetails userDetails) {
-        log.info("jwwt token utils++++++++++++++++");
+
         Map<String, Object> claims = new HashMap<>();
-        log.info("going to call do genrate token +++++"+userDetails.getUsername());
         String result="";
         try {
             result = doGenerateToken(claims, userDetails.getUsername());
         }catch (Exception e){
-            log.warn("zxhjbhzjxbhjzbxhj"+e);
+           System.out.println("error in token util "+e);
         }
-        log.warn("humne war kiya+++"+result);
         return result;
     }
 

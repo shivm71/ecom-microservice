@@ -1,4 +1,4 @@
-package com.example.rawredis.Config;
+package com.example.rawredis.Util;
 
 import com.example.rawredis.Service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;

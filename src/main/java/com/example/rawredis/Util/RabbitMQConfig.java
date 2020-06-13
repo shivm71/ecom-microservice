@@ -1,6 +1,4 @@
-package com.example.rawredis.Config;
-
-//package com.example.rawredis.Config;
+package com.example.rawredis.Util;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Binding;
@@ -18,19 +16,26 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("${product.rabbitmq.queue}")
-    String queueName;
+    @Value("${notify.rabbitmq.queue}")
+    String notifyqueueName;
 
-    @Value("${product.rabbitmq.exchange}")
+    @Value("${update.rabbitmq.queue}")
+    String updatequeueName;
+
+    @Value("${queue.rabbitmq.exchange}")
     String exchange;
 
-    @Value("${product.rabbitmq.routingkey}")
-    private String routingkey;
 
     @Bean
-    Queue queue() {
+    Queue NotifyQueue() {
 
-        return new Queue(queueName, false);
+        return new Queue(notifyqueueName, false);
+    }
+
+    @Bean
+    Queue UpdateQueue() {
+
+        return new Queue(updatequeueName, false);
     }
 
     @Bean
@@ -38,10 +43,17 @@ public class RabbitMQConfig {
         return new DirectExchange(exchange);
     }
 
+
     @Bean
-    Binding binding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingkey);
+    Binding Notifybinding(Queue NotifyQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(NotifyQueue).to(exchange).with("NotifyQueue");
     }
+
+    @Bean
+    Binding UpdateBinding(Queue UpdateQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(UpdateQueue).to(exchange).with("UpdateQueue");
+    }
+
 
     @Bean
     public MessageConverter jsonMessageConverter() {
@@ -54,4 +66,3 @@ public class RabbitMQConfig {
         return rabbitTemplate;
     }
 }
-

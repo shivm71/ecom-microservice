@@ -3,11 +3,10 @@ package com.example.rawredis.Service;
 import com.example.rawredis.Dao.ProductDAO;
 import com.example.rawredis.Dao.ProductDAOimpl;
 import com.example.rawredis.Dao.ProductRedisDAOImpl;
-import com.example.rawredis.Dao.RabbitMQDAO;
 import com.example.rawredis.Dto.ProductDTO;
+import com.example.rawredis.Model.NotifyRequest;
 import com.example.rawredis.Model.Product;
-import com.example.rawredis.Model.QueueRequest;
-import lombok.extern.slf4j.Slf4j;
+import com.example.rawredis.Model.UpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +15,15 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-@Slf4j
 public class ProductService {
     @Autowired
     ProductRedisDAOImpl productRedisDAOImpl;
-
 
     @Autowired
     ProductDAOimpl productDAOimpl;
 
     @Autowired
-    RabbitMQDAO rabbitMQDAO;
+    RabbitProducer rabbitProducer;
 
 
     public ProductDTO getbyid(String id){
@@ -43,6 +40,27 @@ public class ProductService {
         }
 
     }
+
+    public Object edit(Product product){
+        if (getbyid(product.getId()) == null){
+            return "no product available";
+        }
+        if(productRedisDAOImpl.isExist(product.getId())){
+            productRedisDAOImpl.insert(product);
+        }
+        productDAOimpl.update(product);
+
+        notifycheck(product);
+        return getbyid(product.getId());
+    }
+
+    private void notifycheck(Product product) {
+        if(product.getQuantity()>0 && productRedisDAOImpl.isExist("QUEUE",product.getId())){
+            rabbitProducer.sendupdate(new UpdateRequest(product.getId()));
+            productRedisDAOImpl.deleteOne("QUEUE",product.getId());
+        }
+    }
+
     public Collection<ProductDTO> getall(){
         //todo if cache empty then what to do
         List<ProductDTO> list= new ArrayList<>();
@@ -50,7 +68,6 @@ public class ProductService {
             list.add(new ProductDTO(product));
         }
 
-        log.info("services get all products"+list);
         return list;
     }
     public String fillRedis(){
@@ -63,7 +80,7 @@ public class ProductService {
     }
     public ProductDTO insert(Product product)
     {
-        log.info("product service"+product);
+
 //        productRedisDAOImpl.insert(product);
 //        return new ProductDTO(product);
         return new ProductDTO(productDAOimpl.insert(product));
@@ -78,24 +95,28 @@ public class ProductService {
         return "Flushing Done";
     }
 
-    public String addtocart(QueueRequest queueRequest){
-        if(productRedisDAOImpl.isExist("QUEUE",queueRequest.getProductid())){
-            rabbitMQDAO.sendtoqueue(queueRequest);
+
+
+    public String addtocart(NotifyRequest notifyRequest){
+        // if odd request then sleep 2 sec -> som
+        if(productRedisDAOImpl.isExist("QUEUE",notifyRequest.getProductid())){
+            rabbitProducer.sendnotify(notifyRequest);
             // Send to rabbit queuw
 
             return("Product out of stock You'll be notify when ity will be back in stock");
         } else{
 
-            int result=productDAOimpl.order(queueRequest);
+            int result=productDAOimpl.order(notifyRequest);
 
             if(result==0){
-                productRedisDAOImpl.set("QUEUE",queueRequest.getProductid());
+                productRedisDAOImpl.set("QUEUE",notifyRequest.getProductid());
+                rabbitProducer.sendnotify(notifyRequest);
                 return "Product out of stock You'll be notify when ity will be back in stock";
 
             }else if(result==1){
 
-                rabbitMQDAO.sendtoqueue(queueRequest);
-                productRedisDAOImpl.set("QUEUE",queueRequest.getProductid());
+
+                productRedisDAOImpl.set("QUEUE",notifyRequest.getProductid());
 
             }
            return "Order Placed";
@@ -103,6 +124,8 @@ public class ProductService {
         }
     }
 //    3 3users 2 1 0->redis->entry
+
+
 
 
 }

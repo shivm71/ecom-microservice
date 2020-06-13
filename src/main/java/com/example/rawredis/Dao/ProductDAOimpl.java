@@ -2,8 +2,7 @@ package com.example.rawredis.Dao;
 
 import com.example.rawredis.Dto.ProductDTO;
 import com.example.rawredis.Model.Product;
-import com.example.rawredis.Model.QueueRequest;
-import lombok.extern.slf4j.Slf4j;
+import com.example.rawredis.Model.NotifyRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-@Slf4j
+
 @Repository
 public class ProductDAOimpl{
     @Autowired
@@ -19,11 +18,11 @@ public class ProductDAOimpl{
 
 
     @Value("${cache.size}")
-    private static int cachesize;
+    private int cachesize;
 
     public Product insert(Product product)
     {
-        log.info("ProductDAOO impl"+product);
+
        return(productDAO.save(product));
     }
     public Product findbyid(String id){
@@ -42,20 +41,26 @@ public class ProductDAOimpl{
     //0-> out of stock
     //1-> product entry 1
     //2-> more then 1 products
-    public int order(QueueRequest queueRequest){
+    public int order(NotifyRequest queueRequest){
         Product product = findbyid(queueRequest.getProductid());
         if(product.getQuantity() == 0){
             return 0;
         } else if(product.getQuantity() == 1){
-           update(product);
+           updateQuantity(product);
            return 1;
         }else{
-            update(product);
+            updateQuantity(product);
             return 2;
         }
     }
-    public void update(Product product){
+    public void updateQuantity(Product product){
         product.setQuantity(product.getQuantity()-1);
+        productDAO.save(product);
+    }
+
+
+    public void update(Product product){
+
         productDAO.save(product);
     }
 

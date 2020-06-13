@@ -1,14 +1,11 @@
-package com.example.rawredis.Config;
+package com.example.rawredis.Util;
 
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,9 +13,6 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PreDestroy;
 
 /**
  * Created by OmiD.HaghighatgoO on 8/19/2019.
@@ -27,7 +21,7 @@ import javax.annotation.PreDestroy;
 @EnableCaching
 @EnableRedisRepositories
 @Configuration
-public class Rconfig {
+public class Redisconfig {
 
 
     @Value("${spring.redis.host}")

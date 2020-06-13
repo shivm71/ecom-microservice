@@ -5,13 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
-
-
+import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public class ProductDTO {
+public class ProductDTO implements Serializable {
     private String id;
     private String product_name;
     private String description;
@@ -20,6 +18,18 @@ public class ProductDTO {
 
 
     public ProductDTO(){}
+
+    @Override
+    public String toString() {
+        return "ProductDTO{" +
+                "id='" + id + '\'' +
+                ", product_name='" + product_name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                '}';
+    }
+
     public ProductDTO(Product product){
         this.id = product.getId();
         this.product_name=product.getProduct_name();

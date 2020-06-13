@@ -1,12 +1,11 @@
 package com.example.rawredis.Controller;
 
 
-import com.example.rawredis.Config.JwtTokenUtil;
+import com.example.rawredis.Util.JwtTokenUtil;
 import com.example.rawredis.Dto.UserDto;
 import com.example.rawredis.Model.JwtRequest;
 import com.example.rawredis.Model.JwtResponse;
 import com.example.rawredis.Service.JwtUserDetailsService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Slf4j
+
 @CrossOrigin
 public class JwtAuthenticationController {
 

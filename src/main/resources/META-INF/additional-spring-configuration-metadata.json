@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "product.rabbitmq.exchange",
+      "type": "java.lang.String",
+      "description": "Description for product.rabbitmq.exchange."
+  }
+] }

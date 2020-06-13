@@ -2,8 +2,6 @@ package com.example.rawredis.Dao;
 
 import com.example.rawredis.Model.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-@Slf4j
 public class ProductRedisDAOImpl {
     @Autowired
     RedisTemplate redisTemplate;
@@ -21,18 +18,22 @@ public class ProductRedisDAOImpl {
     String KEY = "Product";
 
     @Value("${cache.size}")
-    static int cachesize;
+    private int cachesize;
 
     @Autowired
     RedisConnectionFactory factory;
 
     public boolean isExist(String id) {
+
         return(redisTemplate.opsForHash().hasKey(KEY,id));
     }
 
+
     public boolean isExist(String Key ,String id) {
+
         return(redisTemplate.opsForHash().hasKey(KEY,id));
     }
+
 
     public void insert(Product product){
         if(getSize() >= cachesize){
@@ -41,12 +42,22 @@ public class ProductRedisDAOImpl {
         Map productHash = new ObjectMapper().convertValue(product, Map.class);
         redisTemplate.opsForHash().put(KEY, product.getId(), productHash);
     }
+
+
+    public void insert(ArrayList<Product> product){
+        for (Product entry : product){
+            insert(entry);
+        }
+    }
+
+
     public void set(String KEY,String id){
         //true -> shows out of stock for particular id in queue as a key
         redisTemplate.opsForHash().put(KEY,id,true);
     }
 
     public long getSize(){
+
         return redisTemplate.opsForHash().size(KEY);
     }
 
@@ -56,10 +67,11 @@ public class ProductRedisDAOImpl {
 
     }
 
-    public void insert(ArrayList<Product> product){
-        for (Product entry : product){
-            insert(entry);
-        }
+
+    public void deleteOne(String KEY , String id){
+
+        redisTemplate.opsForHash().delete(KEY,id);
+
     }
 
 
@@ -67,6 +79,8 @@ public class ProductRedisDAOImpl {
         return (Product) redisTemplate.opsForHash().get(KEY,id);
 
     }
+
+
     public List<Product> getAll(){
         Map entries= redisTemplate.opsForHash().entries(KEY);
         ArrayList<Product> listproducts= new ArrayList<>();
@@ -79,7 +93,8 @@ public class ProductRedisDAOImpl {
         return listproducts;
     }
 
-    public void deleteAll(){
+    public void deleteAll()
+    {
         factory.getConnection().flushDb();
     }
 

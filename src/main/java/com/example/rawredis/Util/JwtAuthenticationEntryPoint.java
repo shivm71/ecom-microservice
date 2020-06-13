@@ -1,4 +1,4 @@
-package com.example.rawredis.Config;
+package com.example.rawredis.Util;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
