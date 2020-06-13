@@ -55,7 +55,9 @@ public class ProductDAOimpl{
     }
     public void updateQuantity(Product product){
         product.setQuantity(product.getQuantity()-1);
-        productDAO.save(product);
+//        Product produ=
+                productDAO.save(product);
+        System.out.println(product);
     }
 
 
