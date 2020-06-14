@@ -31,16 +31,18 @@ public class ProductRedisDAOImpl {
 
     public boolean isExist(String Key ,String id) {
 
-        return(redisTemplate.opsForHash().hasKey(KEY,id));
+        return(redisTemplate.opsForHash().hasKey(Key,id));
     }
 
 
     public void insert(Product product){
-        if(getSize() >= cachesize){
-            deleteOne();
+        if(product.getQuantity() > 0) {
+            if (getSize() >= cachesize) {
+                deleteOne();
+            }
+            Map productHash = new ObjectMapper().convertValue(product, Map.class);
+            redisTemplate.opsForHash().put(KEY, product.getId(), productHash);
         }
-        Map productHash = new ObjectMapper().convertValue(product, Map.class);
-        redisTemplate.opsForHash().put(KEY, product.getId(), productHash);
     }
 
 
@@ -51,9 +53,9 @@ public class ProductRedisDAOImpl {
     }
 
 
-    public void set(String KEY,String id){
+    public void set(String Key,String id){
         //true -> shows out of stock for particular id in queue as a key
-        redisTemplate.opsForHash().put(KEY,id,true);
+        redisTemplate.opsForHash().put(Key,id,true);
     }
 
     public long getSize(){
@@ -67,6 +69,11 @@ public class ProductRedisDAOImpl {
 
     }
 
+    public void deleteOne(String id){
+
+        redisTemplate.opsForHash().delete(KEY,id);
+
+    }
 
     public void deleteOne(String KEY , String id){
 
@@ -76,7 +83,7 @@ public class ProductRedisDAOImpl {
 
 
     public Product findbyid(String id){
-        return (Product) redisTemplate.opsForHash().get(KEY,id);
+        return  new ObjectMapper().convertValue(redisTemplate.opsForHash().get(KEY,id),Product.class);
 
     }
 

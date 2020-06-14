@@ -15,7 +15,8 @@ import java.util.Optional;
 public class ProductDAOimpl{
     @Autowired
     ProductDAO productDAO;
-
+    @Autowired
+    ProductRedisDAOImpl productRedisDAOImpl;
 
     @Value("${cache.size}")
     private int cachesize;
@@ -55,13 +56,23 @@ public class ProductDAOimpl{
     }
     public void updateQuantity(Product product){
         product.setQuantity(product.getQuantity()-1);
+        updateRedis(product);
         productDAO.save(product);
     }
 
 
     public void update(Product product){
-
+        updateRedis(product);
         productDAO.save(product);
+    }
+    public void updateRedis(Product product){
+        boolean isPresent = productRedisDAOImpl.isExist(product.getId());
+        if(isPresent && product.getQuantity()>0){
+            productRedisDAOImpl.insert(product);
+        }
+        if(isPresent && product.getQuantity()<=0){
+            productRedisDAOImpl.deleteOne(product.getId());
+        }
     }
 
 }

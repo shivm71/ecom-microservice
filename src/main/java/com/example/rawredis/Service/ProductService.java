@@ -45,9 +45,7 @@ public class ProductService {
         if (getbyid(product.getId()) == null){
             return "no product available";
         }
-        if(productRedisDAOImpl.isExist(product.getId())){
-            productRedisDAOImpl.insert(product);
-        }
+
         productDAOimpl.update(product);
 
         notifycheck(product);
@@ -119,6 +117,7 @@ public class ProductService {
                 productRedisDAOImpl.set("QUEUE",notifyRequest.getProductid());
 
             }
+
            return "Order Placed";
 
         }

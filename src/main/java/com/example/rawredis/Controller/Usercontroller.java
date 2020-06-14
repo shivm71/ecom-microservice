@@ -1,6 +1,5 @@
 package com.example.rawredis.Controller;
 
-import com.example.rawredis.Dto.ProductDTO;
 import com.example.rawredis.Model.NotifyRequest;
 import com.example.rawredis.Model.Product;
 import com.example.rawredis.Service.ProductService;
@@ -10,8 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RestController
